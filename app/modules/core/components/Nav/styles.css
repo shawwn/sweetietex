@@ -1,0 +1,22 @@
+.nav {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+  height: 100vh;
+  left: 0;
+  top: 0;
+  padding: 0 24px 0 0;
+  background-color: rgba(244, 245, 240, 1);
+  padding-top: 24px;
+  z-index: 9000;
+}
+
+.link {
+  line-height: 40px;
+  margin-left: 16px;
+  color: rgb(129, 127, 122);
+  font-size: 15px;
+  text-decoration: none;
+  font-weight: bold;
+}

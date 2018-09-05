@@ -1,0 +1,18 @@
+{
+  "name": "snappi",
+  "productName": "Snappi",
+  "version": "1.0.0",
+  "description": "online backups for the rest of us.",
+  "main": "./main.prod.js",
+  "author": {
+    "name": "SweetieBird",
+    "email": "emkolar@gmail.com",
+    "url": "https://github.com/sheminusminus"
+  },
+  "scripts": {
+    "electron-rebuild": "node -r babel-register ../internals/scripts/ElectronRebuild.js",
+    "postinstall": "yarn electron-rebuild"
+  },
+  "license": "",
+  "dependencies": {}
+}
