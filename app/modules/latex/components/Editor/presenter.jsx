@@ -1,12 +1,44 @@
 // @flow
 
 import * as React from 'react';
-import { Tex, InlineTex } from 'react-tex';
+import { Tex } from 'react-tex';
 import _ from 'lodash';
 import html2canvas from 'html2canvas';
 
 import { classie } from '../../../../utils';
 import styles from './styles.css';
+
+import katex from 'katex';
+
+class InlineTex extends React.Component{
+  static texTransform(content = '', lh = '\\${2}', rh = '\\${2}', after = x => x, before = x => x) {
+    let pattern  = new RegExp(lh + "(.+?)" + rh,"g")
+    let html = content.replace(pattern,function(x, string){
+      return string ? after(katex.renderToString(before(string),{"throwOnError":false})) : "";
+    });
+    return html;
+  }
+  static texHTML(content='', tag="span", sep="\n<br><br>\n") {
+    content = `<${tag}>` + content.replace(new RegExp("[\\n][\\n \\t]+", 'g'), `</${tag}>${sep}<${tag}>`) + `</${tag}>`;
+    content = InlineTex.texTransform(content, '[$][$]', '[$][$]',
+        x => `</${tag}><${"center"}><${tag}>${x}</${tag}></${"center"}><${tag}>`);
+    content = InlineTex.texTransform(content, '[$]', '[$]', x => x);
+    content = InlineTex.texTransform(content, '[\\\\][(]', '[\\\\][)]', x => x,
+      x => x,
+      //x => `\\left(${x}\\right)`,
+    );
+    return content;
+  }
+  render(){
+    let { texContent } = this.props;
+    let html = InlineTex.texHTML(texContent || '');
+    return(
+      <div dangerouslySetInnerHTML={{__html: html}}/>
+    )
+  }
+}
+
+global.InlineTex = InlineTex;
 
 type EditorProps = {};
 
@@ -26,9 +58,9 @@ class Editor extends React.Component<EditorProps, EditorState> {
   debouncedImageGen: Function;
 
   state = {
-    inputValue: '\\int_{a}^{b} f(x)dx = F(b) - F(a)',
+    inputValue: '\\(\\int_{a}^{b} f(x)dx = F(b) - F(a)\\)',
     demoString: demoTexString,
-    useInline: false,
+    useInline: true,
     dataUrl: '',
   };
 
