@@ -1,17 +1,19 @@
-# snappi
+# sweetietex
+
+electron text editor to latex to image.
 
 ## Install
 
 First, clone the repo via git:
 
 ```bash
-git clone https://github.com/sheminusminus/snappi
+git clone https://github.com/sheminusminus/sweetietex
 ```
 
 And then install dependencies with yarn.
 
 ```bash
-$ cd snappy
+$ cd sweetietex
 $ yarn
 ```
 
